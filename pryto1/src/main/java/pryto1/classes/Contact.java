@@ -1,21 +1,26 @@
 package pryto1.classes;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Contact{
     private String name;
-    private List<String> numbers = new ArrayList<>();
+    private String numbers;
     private String mail;
     private String direction;
     private String nick;
 
-    public Contact(String name, String number, String mail, String direction, String nick) {
-        this.setName(name);
-        numbers.add(number);
-        this.setMail(mail);
-        this.setDirection(direction);
-        this.setNick(nick);
+    public Contact(String name, String numbers, String mail, String direction, String nick) {
+        this.name = name;
+        this.numbers = numbers;
+        this.mail = mail;
+        this.direction = direction;
+        this.nick = nick;
+    }
+
+    public String getNumbers() {
+        return numbers;
+    }
+
+    public void setNumbers(String numbers) {
+        this.numbers = numbers;
     }
 
     public String getNick() {
@@ -51,7 +56,13 @@ public class Contact{
     }
 
     public void showData(){
-
+        System.out.println("==============================");
+        System.out.println("Nombre: "+name);
+        System.out.println("Numeros: "+numbers);
+        System.out.println("E-Mail: "+mail);
+        System.out.println("Dirección: "+direction);
+        System.out.println("Apodo: "+nick);
+        System.out.println("==============================");        
     }
 
     public void editData(){
@@ -60,6 +71,5 @@ public class Contact{
 
     public void deleteData(){
         
-    }
-    
+    }    
 }
