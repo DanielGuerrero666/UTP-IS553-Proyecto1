@@ -1,0 +1,3 @@
+Mariana;123232212;;Armenia;Mari
+Carlos;123232;;;CJ
+Amelia;1232121232;ame@hotmail.com;EEUU;Ame

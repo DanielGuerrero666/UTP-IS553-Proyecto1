@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class Phonebook{
     private List<Contact> contactList = new ArrayList<>();
     private static File archive;
+    private static String contactInfoFormat;
     private static String contactName;
     private static String contactNumbers;
     private static String contactMail;
@@ -63,26 +65,34 @@ public class Phonebook{
             }
             scan.close();
         } catch (IOException ex) {
-            System.out.println("Error: File not Found...");
+            System.out.println("Error: File Not Found, Creating Default Contact List...");
+            archive = new File("pryto1/archives/default.txt");
+                try {
+                    archive.createNewFile();
+                    System.out.println("Default Contact List Created...");
+                    loadData("default");
+                } catch (IOException ex2) {
+                    System.out.println("Error: Default Contact List Can't be Created...");
+                    ex2.printStackTrace();
+            }
         }
     }    
 
-    public void defaultLoadData(){
-        archive = new File("pryto1/archives/default.txt");
-        if(!archive.exists()){
-            try {
-                archive.createNewFile();
-                System.out.println("Default Contact List Created...");
-                loadData("default");
-            } catch (IOException ex) {
-                System.out.println("Error: Default Contact List Can't be Created...");
+    public void saveData(String fileName){
+        try {
+            FileWriter writer = new FileWriter("pryto1/archives/"+fileName+".txt");
+            for(Contact instanceOfContact : contactList){
+                contactInfoFormat = instanceOfContact.getName()+";"+instanceOfContact.getNumbers()+";"+
+                    instanceOfContact.getMail()+";"+instanceOfContact.getDirection()+";"+
+                        instanceOfContact.getNick();                   
+                
+                writer.write(contactInfoFormat+"\n");
             }
-        }else{
-            loadData("default");
+            writer.close();
+            contactList.clear();
+        } catch (IOException e) {
+            System.out.println("Error: File Not Found...");
+            e.printStackTrace();
         }
-    }
-
-    public void saveData(){
-
     }
 }
