@@ -21,19 +21,70 @@ public class Phonebook{
         contactList.add(contact);
     }
 
-    public void searchContact(Integer index){
+    public void searchContactByName(String name){
+        for(Contact instanceOfContact : contactList){
+            if(instanceOfContact.getName().compareTo(name) == 0 ){
+                instanceOfContact.showData();
+            }
+        }
+    }
 
+    public void searchContactByNumber(String number){
+        for(Contact instanceOfContact : contactList){
+            String numbersChain = instanceOfContact.getNumbers();
+            int aux=0;
+            int index;
+            do {
+                index = numbersChain.indexOf(",", aux);
+                if(index == -1){
+                    index = numbersChain.length();
+                }
+                String actualNumber = numbersChain.substring(aux, index);
+                if(actualNumber.compareTo(number) == 0){
+                    instanceOfContact.showData();
+                }else{
+                    aux = index+1;
+                }
+                aux = index+1;
+            } while (index != numbersChain.length());
+        }
+    }
+
+    public void searchContactByMail(String mail){
+        for(Contact instanceOfContact : contactList){
+            if(instanceOfContact.getMail().compareTo(mail) == 0 ){
+                instanceOfContact.showData();
+            }
+        }
+    }
+
+    public void searchContactByDirection(String direction){
+        for(Contact instanceOfContact : contactList){
+            if(instanceOfContact.getDirection().compareTo(direction) == 0 ){
+                instanceOfContact.showData();
+            }
+        }
+    }
+
+    public void searchContactByNick(String nick){
+        for(Contact instanceOfContact : contactList){
+            if(instanceOfContact.getNick().compareTo(nick) == 0 ){
+                instanceOfContact.showData();
+            }
+        }
     }
 
     public void showContacts(){
-        System.out.println("=============== LISTA DE CONTACTOS ===============");
         for(Contact instanceOfContact : contactList){
             instanceOfContact.showData();
         }
     }
 
-    public void deleteContact(){
+    public void editEspecificContact(){
+    }
 
+    public void deleteContact(){
+        
     }
 
     public void verifyContact(){
@@ -59,9 +110,9 @@ public class Phonebook{
                 aux = index+1;
                 index = line.length();
                 contactNick = line.substring(aux, index);
-                Contact contactInstance = new Contact(contactName, contactNumbers,
+                Contact instanceOfContact = new Contact(contactName, contactNumbers,
                      contactMail, contactDirection, contactNick);
-                addContact(contactInstance);
+                addContact(instanceOfContact);
             }
             scan.close();
         } catch (IOException ex) {

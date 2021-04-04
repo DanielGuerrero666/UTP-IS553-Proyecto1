@@ -65,11 +65,11 @@ public class Contact{
         System.out.println("==============================");        
     }
 
-    public void editData(){
+    public void editData(int option){
 
+        switch(option){
+            case 1: 
+        }
     }
 
-    public void deleteData(){
-        
-    }    
 }
