@@ -1,5 +1,7 @@
 package pryto1.classes;
 
+import java.util.Scanner;
+
 public class Contact{
     private String name;
     private String numbers;
@@ -66,10 +68,22 @@ public class Contact{
     }
 
     public void editData(int option){
-
+        Scanner scan = new Scanner(System.in);
         switch(option){
-            case 1: 
+            case 1: setName(scan.nextLine());
+                break;
+            case 2: setNumbers(scan.nextLine());
+                break;
+            case 3: setMail(scan.nextLine());
+                break;
+            case 4: setDirection(scan.nextLine());
+                break;
+            case 5: setNick(scan.nextLine());
+                break;
+            default: System.out.println("Not a valid option...");
+                break;
         }
+        scan.close();
     }
 
 }

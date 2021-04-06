@@ -25,6 +25,8 @@ public class Phonebook{
         for(Contact instanceOfContact : contactList){
             if(instanceOfContact.getName().compareTo(name) == 0 ){
                 instanceOfContact.showData();
+            }else{
+                System.out.println("0 concordancias con la agenda");
             }
         }
     }
@@ -54,6 +56,8 @@ public class Phonebook{
         for(Contact instanceOfContact : contactList){
             if(instanceOfContact.getMail().compareTo(mail) == 0 ){
                 instanceOfContact.showData();
+            }else{
+                System.out.println("0 concordancias con la agenda");
             }
         }
     }
@@ -62,6 +66,8 @@ public class Phonebook{
         for(Contact instanceOfContact : contactList){
             if(instanceOfContact.getDirection().compareTo(direction) == 0 ){
                 instanceOfContact.showData();
+            }else{
+                System.out.println("0 concordancias con la agenda");
             }
         }
     }
@@ -70,25 +76,61 @@ public class Phonebook{
         for(Contact instanceOfContact : contactList){
             if(instanceOfContact.getNick().compareTo(nick) == 0 ){
                 instanceOfContact.showData();
+            }else{
+                System.out.println("0 concordancias con la agenda");
             }
         }
     }
 
     public void showContacts(){
+        int i=1;
         for(Contact instanceOfContact : contactList){
+            System.out.println("==============================");
+            System.out.println("Contacto #"+i);
             instanceOfContact.showData();
+            i++;
         }
     }
 
-    public void editEspecificContact(){
+    public void editEspecificContact(int positionInList){
+        positionInList--;
+        contactList.get(positionInList).editData(1);
     }
 
-    public void deleteContact(){
-        
+    public void deleteContact(int positionInList){
+        positionInList--;
+        contactList.remove(positionInList);
     }
 
-    public void verifyContact(){
-
+    public void verifyContactNumbers(){
+        if(contactList.isEmpty()==false){
+            for(Contact instanceOfContact : contactList){
+                String numbersChain = instanceOfContact.getNumbers();
+                int aux=0;
+                int index;
+                do {
+                    index = numbersChain.indexOf(",", aux);
+                    if(index == -1){
+                        index = numbersChain.length();
+                    }
+                    String actualNumber = numbersChain.substring(aux, index);
+                    int counter = 0;
+                    for(Contact innerInstanceOfContact : contactList){
+                        if(innerInstanceOfContact.getNumbers().indexOf(actualNumber) != -1){
+                            counter++;
+                            if(counter>1){
+                                System.out.println("Error: Número repetido hallado, Imposible acceder a la informacion de contacto...");
+                                System.exit(0);
+                            }
+                        }
+                    }
+                    aux = index+1;
+                } while (index != numbersChain.length());
+            }
+            System.out.println("Agenda verificada, no se detectaron problemas.");
+        }else{
+            System.out.println("La agenda esta vacia. Nada que verificar.");
+        }
     }
 
     public void loadData(String fileName){
