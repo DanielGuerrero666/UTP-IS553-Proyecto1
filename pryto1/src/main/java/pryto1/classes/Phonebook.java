@@ -92,9 +92,14 @@ public class Phonebook{
         }
     }
 
-    public void editEspecificContact(int positionInList){
+    public void identifyEspecificContact(int positionInList){
         positionInList--;
-        contactList.get(positionInList).editData(1);
+        System.out.println(contactList.get(positionInList));
+    }
+
+    public void editEspecificContactInfo(int option, int positionInList, String newInfo){
+        positionInList--;
+        contactList.get(positionInList).editData(option, newInfo);
     }
 
     public void deleteContact(int positionInList){

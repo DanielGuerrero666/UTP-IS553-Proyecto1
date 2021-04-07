@@ -1,6 +1,7 @@
 package pryto1.classes;
 
 import java.util.Scanner;
+import java.util.Base64.Decoder;
 
 public class Contact{
     private String name;
@@ -67,20 +68,31 @@ public class Contact{
         System.out.println("==============================");        
     }
 
-    public void editData(int option){
+    public void editData(int option, String newValue){
         Scanner scan = new Scanner(System.in);
         switch(option){
-            case 1: setName(scan.nextLine());
+            case 1: 
+                setName(newValue);
                 break;
-            case 2: setNumbers(scan.nextLine());
+            case 2: 
+                String addingNumber = ","+newValue;
+                setNumbers(getNumbers()+addingNumber);
                 break;
-            case 3: setMail(scan.nextLine());
+            case 3:    
+                setNumbers(getNumbers().replaceAll(newValue.substring(0, newValue.indexOf("|")),
+                    newValue.substring(newValue.indexOf("|")+1, newValue.length())));
                 break;
-            case 4: setDirection(scan.nextLine());
+            case 4:
+                setMail(newValue);
                 break;
-            case 5: setNick(scan.nextLine());
+            case 5: 
+                setDirection(newValue);
                 break;
-            default: System.out.println("Not a valid option...");
+            case 6: 
+                setNick(newValue);
+                break;
+            default: 
+                System.out.println("Error: Opción invalida");
                 break;
         }
         scan.close();

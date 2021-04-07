@@ -22,8 +22,8 @@ public class Main {
         System.out.println("[3] - Ver contactos");
         System.out.println("[4] - Editar contacto");
         System.out.println("[5] - Eliminar contacto");
-        System.out.println("[6] - Guardar");
-        System.out.println("[7] - Cargar");
+        System.out.println("[6] - Exportar");
+        System.out.println("[7] - Importar");
         System.out.println("[8] - Salir");
         System.out.println("============================================");
 
@@ -47,7 +47,15 @@ public class Main {
                 showPhonebook();
                 break;
             case 4:
+                System.out.print("\033[H\033[2J");
+                System.out.flush();
+                editPhonebook();
+                break;            
             case 5:
+                System.out.print("\033[H\033[2J");
+                System.out.flush();
+                deleteContactInPhonebook();
+                break;        
             case 6:
             case 7:
             case 8:
@@ -101,6 +109,7 @@ public class Main {
             misContactos.addContact(new Contact(name, number, mail, direction, nick));
             System.out.println("Contacto Guardado.");
             misContactos.saveData("default");
+            misContactos.loadData("default");
             System.out.print("\033[H\033[2J");
             System.out.flush();
             mainMenu();
@@ -184,5 +193,144 @@ public class Main {
         System.out.flush();
         mainMenu();
         scan.close();
+    }
+
+    public static void editPhonebook(){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Ingrese la posicion del contacto a editar: ");
+        int positionInList = scan.nextInt();
+        scan.nextLine();
+        misContactos.identifyEspecificContact(positionInList);
+        System.out.println("¿Es este el contacto que desea editar? S/N");
+        String confirmation = scan.nextLine();
+        if(confirmation.equalsIgnoreCase("S")==true){
+            System.out.println("Seleccione el campo del contacto que desea editar");
+            System.out.println("[1] - Editar nombre");
+            System.out.println("[2] - Agregar número");
+            System.out.println("[3] - Editar número existente");
+            System.out.println("[4] - Editar correo");
+            System.out.println("[5] - Editar dirección");
+            System.out.println("[6] - Editar sobrenombre");
+
+            System.out.print("[#] : ");
+            int option = scan.nextInt();
+            scan.nextLine();
+
+            switch(option){
+                case 1:
+                    System.out.println("Ingrese el nuevo nombre del contacto: ");
+                    String name = scan.nextLine();
+                    misContactos.editEspecificContactInfo(1, positionInList, name);
+                    misContactos.saveData("default");
+                    misContactos.loadData("default");
+                    System.out.println("Edicion de contacto exitosa.");
+                    System.out.println("Informacion actualizada");
+                    misContactos.identifyEspecificContact(positionInList);
+                    scan.nextLine();
+                    System.out.print("\033[H\033[2J");
+                    System.out.flush();
+                    mainMenu();
+                    break;
+                case 2:
+                    System.out.print("Ingrese el nuevo numero de contacto :");
+                    String newNumber = scan.nextLine();
+                    misContactos.editEspecificContactInfo(2, positionInList, newNumber);
+                    misContactos.saveData("default");
+                    misContactos.loadData("default");
+                    System.out.println("Edicion de contacto exitosa.");
+                    System.out.println("Informacion actualizada");
+                    misContactos.identifyEspecificContact(positionInList);
+                    scan.nextLine();
+                    System.out.print("\033[H\033[2J");
+                    System.out.flush();
+                    mainMenu();
+                    break;
+                case 3:
+                    System.out.print("Ingrese el numero que desea editar: ");
+                    String oldToChangeNumber = scan.nextLine();
+                    System.out.println("Ingrese el nuevo numero: ");
+                    String newToChangeNumber = scan.nextLine();
+                    String codednumber = oldToChangeNumber+"|"+newToChangeNumber;
+                    misContactos.editEspecificContactInfo(3, positionInList, codednumber);
+                    misContactos.saveData("default");
+                    misContactos.loadData("default");
+                    System.out.println("Edicion de contacto exitosa.");
+                    System.out.println("Informacion actualizada");
+                    misContactos.identifyEspecificContact(positionInList);
+                    scan.nextLine();
+                    System.out.print("\033[H\033[2J");
+                    System.out.flush();
+                    mainMenu();
+                    break;
+                case 4:
+                    System.out.println("Ingrese el nuevo correo del contacto: ");
+                    String mail = scan.nextLine();
+                    misContactos.editEspecificContactInfo(4, positionInList, mail);
+                    misContactos.saveData("default");
+                    misContactos.loadData("default");
+                    System.out.println("Edicion de contacto exitosa.");
+                    System.out.println("Informacion actualizada");
+                    misContactos.identifyEspecificContact(positionInList);
+                    scan.nextLine();
+                    System.out.print("\033[H\033[2J");
+                    System.out.flush();
+                    mainMenu();
+                    break;
+                case 5:
+                    System.out.println("Ingrese la nueva dirección del contacto: ");
+                    String direction = scan.nextLine();
+                    misContactos.editEspecificContactInfo(5, positionInList, direction);
+                    misContactos.saveData("default");
+                    misContactos.loadData("default");
+                    System.out.println("Edicion de contacto exitosa.");
+                    System.out.println("Informacion actualizada");
+                    misContactos.identifyEspecificContact(positionInList);
+                    scan.nextLine();
+                    System.out.print("\033[H\033[2J");
+                    System.out.flush();
+                    mainMenu();
+                    break;
+                case 6:
+                    System.out.println("Ingrese el nuevo sobrenombre del contacto: ");
+                    String nick = scan.nextLine();
+                    misContactos.editEspecificContactInfo(6, positionInList, nick);
+                    misContactos.saveData("default");
+                    misContactos.loadData("default");
+                    System.out.println("Edicion de contacto exitosa.");
+                    System.out.println("Informacion actualizada");
+                    misContactos.identifyEspecificContact(positionInList);
+                    scan.nextLine();
+                    System.out.print("\033[H\033[2J");
+                    System.out.flush();
+                    mainMenu();
+                    break;
+                default:
+                    System.out.println("Opcion Invalida");
+                    System.out.print("\033[H\033[2J");
+                    System.out.flush();
+                    mainMenu();
+            }
+        }
+        scan.close();
+    }
+
+    public static void deleteContactInPhonebook(){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Ingrese la posicion del contacto a eliminar: ");
+        int positionInList = scan.nextInt();
+        scan.nextLine();
+        misContactos.identifyEspecificContact(positionInList);
+        System.out.println("¿Seguro que desea eliminar este contacto? S/N");
+        String confirmation = scan.nextLine();
+        if(confirmation.equalsIgnoreCase("S")==true){
+            misContactos.deleteContact(positionInList);
+            misContactos.saveData("default");
+            misContactos.loadData("default");
+        }else{
+            System.out.println("Proceso cancelado");
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
+            mainMenu();
+        }
     }
 }
