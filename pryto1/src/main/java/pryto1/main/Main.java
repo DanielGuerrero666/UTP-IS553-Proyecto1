@@ -1,18 +1,25 @@
 package pryto1.main;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
-
 import pryto1.classes.Contact;
 import pryto1.classes.Phonebook;
 
 public class Main {
     static Phonebook misContactos = new Phonebook();
+    static String fileName;
     public static void main(String[] args) {
-        misContactos.loadData("default");
+        defineFileName("default");
+        misContactos.loadData(fileName);
         System.out.println("========================");
         System.out.println("Verificando contactos...");
         misContactos.verifyContactNumbers();
         mainMenu();
+    }
+
+    public static void defineFileName(String setFileName){
+        fileName = setFileName;
     }
 
     public static void mainMenu(){
@@ -57,7 +64,15 @@ public class Main {
                 deleteContactInPhonebook();
                 break;        
             case 6:
+                System.out.print("\033[H\033[2J");
+                System.out.flush();
+                exportData();
+                break;        
             case 7:
+                System.out.print("\033[H\033[2J");
+                System.out.flush();
+                importData();
+                break;      
             case 8:
                 try {
                     System.out.println("Hasta pronto...");
@@ -108,8 +123,8 @@ public class Main {
         if(option.equalsIgnoreCase("S")==true){
             misContactos.addContact(new Contact(name, number, mail, direction, nick));
             System.out.println("Contacto Guardado.");
-            misContactos.saveData("default");
-            misContactos.loadData("default");
+            misContactos.saveData(fileName);
+            misContactos.loadData(fileName);
             System.out.print("\033[H\033[2J");
             System.out.flush();
             mainMenu();
@@ -185,9 +200,9 @@ public class Main {
     }
 
     public static void showPhonebook(){
+        Scanner scan = new Scanner(System.in);
         System.out.println("============== Contactos en la Agenda ==============");
         misContactos.showContacts();
-        Scanner scan = new Scanner(System.in);
         scan.nextLine();
         System.out.print("\033[H\033[2J");
         System.out.flush();
@@ -221,8 +236,8 @@ public class Main {
                     System.out.println("Ingrese el nuevo nombre del contacto: ");
                     String name = scan.nextLine();
                     misContactos.editEspecificContactInfo(1, positionInList, name);
-                    misContactos.saveData("default");
-                    misContactos.loadData("default");
+                    misContactos.saveData(fileName);
+                    misContactos.loadData(fileName);
                     System.out.println("Edicion de contacto exitosa.");
                     System.out.println("Informacion actualizada");
                     misContactos.identifyEspecificContact(positionInList);
@@ -235,8 +250,9 @@ public class Main {
                     System.out.print("Ingrese el nuevo numero de contacto :");
                     String newNumber = scan.nextLine();
                     misContactos.editEspecificContactInfo(2, positionInList, newNumber);
-                    misContactos.saveData("default");
-                    misContactos.loadData("default");
+                    misContactos.verifyEditContactNumbers();
+                    misContactos.saveData(fileName);
+                    misContactos.loadData(fileName);
                     System.out.println("Edicion de contacto exitosa.");
                     System.out.println("Informacion actualizada");
                     misContactos.identifyEspecificContact(positionInList);
@@ -248,12 +264,13 @@ public class Main {
                 case 3:
                     System.out.print("Ingrese el numero que desea editar: ");
                     String oldToChangeNumber = scan.nextLine();
-                    System.out.println("Ingrese el nuevo numero: ");
+                    System.out.print("Ingrese el nuevo numero: ");
                     String newToChangeNumber = scan.nextLine();
                     String codednumber = oldToChangeNumber+"|"+newToChangeNumber;
                     misContactos.editEspecificContactInfo(3, positionInList, codednumber);
-                    misContactos.saveData("default");
-                    misContactos.loadData("default");
+                    misContactos.verifyEditContactNumbers();
+                    misContactos.saveData(fileName);
+                    misContactos.loadData(fileName);
                     System.out.println("Edicion de contacto exitosa.");
                     System.out.println("Informacion actualizada");
                     misContactos.identifyEspecificContact(positionInList);
@@ -266,8 +283,8 @@ public class Main {
                     System.out.println("Ingrese el nuevo correo del contacto: ");
                     String mail = scan.nextLine();
                     misContactos.editEspecificContactInfo(4, positionInList, mail);
-                    misContactos.saveData("default");
-                    misContactos.loadData("default");
+                    misContactos.saveData(fileName);
+                    misContactos.loadData(fileName);
                     System.out.println("Edicion de contacto exitosa.");
                     System.out.println("Informacion actualizada");
                     misContactos.identifyEspecificContact(positionInList);
@@ -280,8 +297,8 @@ public class Main {
                     System.out.println("Ingrese la nueva dirección del contacto: ");
                     String direction = scan.nextLine();
                     misContactos.editEspecificContactInfo(5, positionInList, direction);
-                    misContactos.saveData("default");
-                    misContactos.loadData("default");
+                    misContactos.saveData(fileName);
+                    misContactos.loadData(fileName);
                     System.out.println("Edicion de contacto exitosa.");
                     System.out.println("Informacion actualizada");
                     misContactos.identifyEspecificContact(positionInList);
@@ -294,8 +311,8 @@ public class Main {
                     System.out.println("Ingrese el nuevo sobrenombre del contacto: ");
                     String nick = scan.nextLine();
                     misContactos.editEspecificContactInfo(6, positionInList, nick);
-                    misContactos.saveData("default");
-                    misContactos.loadData("default");
+                    misContactos.saveData(fileName);
+                    misContactos.loadData(fileName);
                     System.out.println("Edicion de contacto exitosa.");
                     System.out.println("Informacion actualizada");
                     misContactos.identifyEspecificContact(positionInList);
@@ -310,6 +327,10 @@ public class Main {
                     System.out.flush();
                     mainMenu();
             }
+        }else{
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
+            editPhonebook();
         }
         scan.close();
     }
@@ -324,13 +345,100 @@ public class Main {
         String confirmation = scan.nextLine();
         if(confirmation.equalsIgnoreCase("S")==true){
             misContactos.deleteContact(positionInList);
-            misContactos.saveData("default");
-            misContactos.loadData("default");
+            System.out.println("Contacto Eliminado");
+            misContactos.saveData(fileName);
+            misContactos.loadData(fileName);
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
+            mainMenu();
         }else{
             System.out.println("Proceso cancelado");
             System.out.print("\033[H\033[2J");
             System.out.flush();
             mainMenu();
         }
+        scan.close();
+    }
+
+    public static void verifyStructureOfFile(String vFileName){
+        try {
+            Scanner scan = new Scanner(new File("pryto1/archives/"+fileName+".txt"));
+            while(scan.hasNextLine()){
+                String line = scan.nextLine();
+                int counter=0;
+                while (line.contains(";")) {
+                    line = line.substring(line.indexOf(";") + ";".length(), line.length());
+                    counter++;
+                }
+
+                if(counter != 4){
+                        try {
+                            System.out.println("El archivo no cumple con la estructura para este software");
+                            Thread.sleep(2*1000);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        defineFileName("default");
+                        System.out.print("\033[H\033[2J");
+                        System.out.flush();
+                        mainMenu();
+                    }  
+            }
+        } catch (IOException e){
+            try {
+                System.out.println("Archivo no encontrado");
+                Thread.sleep(2*1000);
+            } catch (Exception e2) {
+                e.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+    }
+
+    public static void importData(){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Ingrese el nombre que del archivo que desea importar");
+        String fN = scan.nextLine();
+        System.out.println("¿Seguro que desea cargar estos datos? S/N");
+        String confirmation = scan.nextLine();
+        if(confirmation.equalsIgnoreCase("S")==true){
+            verifyStructureOfFile(fN);
+            System.out.println("Archivo verificado");
+            defineFileName(fN);
+            misContactos.clean();
+            misContactos.loadData(fN);
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
+            mainMenu();
+        }else{
+            try {
+                System.out.println("Proceso cancelado");  
+                Thread.sleep(2*1000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
+            mainMenu();
+        }
+        scan.close();
+    }
+
+    public static void exportData(){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Ingrese el nombre que desea para exportar el archivo");
+        String fN = scan.nextLine();
+        misContactos.saveData(fN);
+        misContactos.clean();
+        try {
+            System.out.println("Archivo Exportado con exito");
+            Thread.sleep(2*1000);
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
+            mainMenu();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        scan.close();
     }
 }

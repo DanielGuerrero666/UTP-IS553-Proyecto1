@@ -1,5 +1,0 @@
-Juan Daniel;3145976792;daniel.noriega@utp.edu.co;Pereira;Dani
-Juan;123,321,4553;;;
-Carlos;133232;;;
-German;31452327,67787678;German@utp.com;Chile;
-Juan Esteban;121232313;Jaunes.op@gmail;Calarca;Juancho

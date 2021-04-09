@@ -22,16 +22,20 @@ public class Phonebook{
     }
 
     public void searchContactByName(String name){
+        int searchedCounter=0;
         for(Contact instanceOfContact : contactList){
             if(instanceOfContact.getName().compareTo(name) == 0 ){
                 instanceOfContact.showData();
-            }else{
-                System.out.println("0 concordancias con la agenda");
             }
+            searchedCounter++;
+        }
+        if(searchedCounter == contactList.size()){
+            System.out.println("No se halló ningun contacto bajo este nombre");
         }
     }
 
     public void searchContactByNumber(String number){
+        int searchedCounter=0;
         for(Contact instanceOfContact : contactList){
             String numbersChain = instanceOfContact.getNumbers();
             int aux=0;
@@ -49,36 +53,49 @@ public class Phonebook{
                 }
                 aux = index+1;
             } while (index != numbersChain.length());
+            searchedCounter++;
+        }
+        if(searchedCounter == contactList.size()){
+            System.out.println("No se halló ningun contacto bajo este número");
         }
     }
 
     public void searchContactByMail(String mail){
+        int searchedCounter=0;
         for(Contact instanceOfContact : contactList){
             if(instanceOfContact.getMail().compareTo(mail) == 0 ){
                 instanceOfContact.showData();
-            }else{
-                System.out.println("0 concordancias con la agenda");
             }
+            searchedCounter++;
+        }
+        if(searchedCounter == contactList.size()){
+            System.out.println("No se halló ningun contacto bajo este nombre de correo");
         }
     }
 
     public void searchContactByDirection(String direction){
+        int searchedCounter=0;
         for(Contact instanceOfContact : contactList){
             if(instanceOfContact.getDirection().compareTo(direction) == 0 ){
                 instanceOfContact.showData();
-            }else{
-                System.out.println("0 concordancias con la agenda");
             }
+            searchedCounter++;
         }
+        if(searchedCounter == contactList.size()){
+            System.out.println("No se halló ningun contacto bajo esta dirección");
+        }        
     }
 
     public void searchContactByNick(String nick){
+        int searchedCounter=0;
         for(Contact instanceOfContact : contactList){
             if(instanceOfContact.getNick().compareTo(nick) == 0 ){
                 instanceOfContact.showData();
-            }else{
-                System.out.println("0 concordancias con la agenda");
             }
+            searchedCounter++;
+        }
+        if(searchedCounter == contactList.size()){
+            System.out.println("No se halló ningun contacto bajo este sobrenombre");
         }
     }
 
@@ -94,7 +111,7 @@ public class Phonebook{
 
     public void identifyEspecificContact(int positionInList){
         positionInList--;
-        System.out.println(contactList.get(positionInList));
+       contactList.get(positionInList).showData();
     }
 
     public void editEspecificContactInfo(int option, int positionInList, String newInfo){
@@ -138,6 +155,38 @@ public class Phonebook{
         }
     }
 
+    public void verifyEditContactNumbers(){
+        if(contactList.isEmpty()==false){
+            for(Contact instanceOfContact : contactList){
+                String numbersChain = instanceOfContact.getNumbers();
+                int aux=0;
+                int index;
+                do {
+                    index = numbersChain.indexOf(",", aux);
+                    if(index == -1){
+                        index = numbersChain.length();
+                    }
+                    String actualNumber = numbersChain.substring(aux, index);
+                    int counter = 0;
+                    for(Contact innerInstanceOfContact : contactList){
+                        if(innerInstanceOfContact.getNumbers().indexOf(actualNumber) != -1){
+                            counter++;
+                            if(counter>1){
+                                System.out.println("Error: No es posible almacenar números repetidos en la agenda");
+                                contactList.clear();
+                                loadData("default");
+                            }
+                        }
+                    }
+                    aux = index+1;
+                } while (index != numbersChain.length());
+            }
+            System.out.println("Número verificado, no se detectaron problemas.");
+        }else{
+            System.out.println("La agenda esta vacia. Nada que verificar.");
+        }
+    }
+
     public void loadData(String fileName){
         try {
             Scanner scan = new Scanner(new File("pryto1/archives/"+fileName+".txt"));
@@ -163,14 +212,14 @@ public class Phonebook{
             }
             scan.close();
         } catch (IOException ex) {
-            System.out.println("Error: File Not Found, Creating Default Contact List...");
+            System.out.println("Error: Archivo no econtrado, Creando lista de contactos por defecto...");
             archive = new File("pryto1/archives/default.txt");
                 try {
                     archive.createNewFile();
-                    System.out.println("Default Contact List Created...");
+                    System.out.println("Creada lista de contactos por defecto");
                     loadData("default");
                 } catch (IOException ex2) {
-                    System.out.println("Error: Default Contact List Can't be Created...");
+                    System.out.println("Error: Lista de contactos por defecto no puede ser creada");
                     ex2.printStackTrace();
             }
         }
@@ -189,8 +238,18 @@ public class Phonebook{
             writer.close();
             contactList.clear();
         } catch (IOException e) {
-            System.out.println("Error: File Not Found...");
+            File newFile = new File("pryto1/archives/"+fileName+".txt");
+            try {
+                newFile.createNewFile();
+                saveData(fileName);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
             e.printStackTrace();
         }
+    }
+
+    public void clean(){
+        contactList.clear();
     }
 }

@@ -1,7 +1,6 @@
 package pryto1.classes;
 
 import java.util.Scanner;
-import java.util.Base64.Decoder;
 
 public class Contact{
     private String name;
