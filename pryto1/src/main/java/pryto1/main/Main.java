@@ -1,7 +1,5 @@
 package pryto1.main;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Scanner;
 import pryto1.classes.Contact;
 import pryto1.classes.OriginalException;
@@ -15,7 +13,13 @@ public class Main {
         misContactos.loadData(fileName);
         System.out.println("========================");
         System.out.println("Verificando contactos...");
-        misContactos.verifyContactNumbers();
+        try {
+            misContactos.verifyContactNumbers();
+            System.out.println("Agenda verificada, no se detectaron problemas.");
+        } catch (OriginalException e) {
+            System.out.println("Error: "+e.getMessage());
+            e.printStackTrace();
+        }
         mainMenu();
     }
 
@@ -38,6 +42,7 @@ public class Main {
         Scanner scan = new Scanner(System.in);
         System.out.print("[#] : ");
         int option = scan.nextInt();
+        scan.nextLine();
         switch(option){
             case 1:            
                 addNewContact();
@@ -245,10 +250,10 @@ public class Main {
         Contact[] arrayOfInfo = misContactos.returnInfo();
         int i=1;
         for(Contact instanceOfContact : arrayOfInfo){
-            System.out.println("==============================================");
             System.out.println("Contacto #"+i);
             System.out.println(contactInfoToString(instanceOfContact.getName(),instanceOfContact.getNumbers(),instanceOfContact.getMail(),
             instanceOfContact.getDirection(),instanceOfContact.getNick()));
+            System.out.println("====================================================");
             i++;
         }
         scan.nextLine();
@@ -263,7 +268,9 @@ public class Main {
         System.out.println("Ingrese la posicion del contacto a editar: ");
         int positionInList = scan.nextInt();
         scan.nextLine();
-        misContactos.identifyEspecificContact(positionInList);
+        Contact instanceOfContact = misContactos.identifyEspecificContact(positionInList);
+        System.out.println(contactInfoToString(instanceOfContact.getName(),instanceOfContact.getNumbers(),instanceOfContact.getMail(),
+        instanceOfContact.getDirection(),instanceOfContact.getNick()));
         System.out.println("¿Es este el contacto que desea editar? S/N");
         String confirmation = scan.nextLine();
         if(confirmation.equalsIgnoreCase("S")==true){
@@ -288,20 +295,40 @@ public class Main {
                     misContactos.loadData(fileName);
                     System.out.println("Edicion de contacto exitosa.");
                     System.out.println("Informacion actualizada");
-                    misContactos.identifyEspecificContact(positionInList);
-                    scan.nextLine();
+                    System.out.println("====================================================");
+                    System.out.println(contactInfoToString(instanceOfContact.getName(),instanceOfContact.getNumbers(),instanceOfContact.getMail(),
+                    instanceOfContact.getDirection(),instanceOfContact.getNick()));
+                    System.out.println("====================================================");
+                    try {
+                        Thread.sleep(2*1000);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
                     break;
                 case 2:
                     System.out.print("Ingrese el nuevo numero de contacto :");
                     String newNumber = scan.nextLine();
                     misContactos.editEspecificContactInfo(2, positionInList, newNumber);
+                try {
                     misContactos.verifyEditContactNumbers(fileName);
+                    System.out.println("Número verificado, no se detectaron problemas.");
+                } catch (OriginalException e) {
+                    System.out.println("Error: "+e.getMessage());
+                    e.printStackTrace();
+                }
                     misContactos.saveData(fileName);
                     misContactos.loadData(fileName);
                     System.out.println("Edicion de contacto exitosa.");
                     System.out.println("Informacion actualizada");
-                    misContactos.identifyEspecificContact(positionInList);
-                    scan.nextLine();
+                    System.out.println("====================================================");
+                    System.out.println(contactInfoToString(instanceOfContact.getName(),instanceOfContact.getNumbers(),instanceOfContact.getMail(),
+                    instanceOfContact.getDirection(),instanceOfContact.getNick()));
+                    System.out.println("====================================================");
+                    try {
+                        Thread.sleep(2*1000);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
                     break;
                 case 3:
                     System.out.print("Ingrese el numero que desea editar: ");
@@ -310,13 +337,26 @@ public class Main {
                     String newToChangeNumber = scan.nextLine();
                     String codednumber = oldToChangeNumber+"|"+newToChangeNumber;
                     misContactos.editEspecificContactInfo(3, positionInList, codednumber);
+                try {
                     misContactos.verifyEditContactNumbers(fileName);
+                    System.out.println("Número verificado, no se detectaron problemas.");
+                } catch (OriginalException e) {
+                    System.out.println("Error: "+e.getMessage());
+                    e.printStackTrace();
+                }
                     misContactos.saveData(fileName);
                     misContactos.loadData(fileName);
                     System.out.println("Edicion de contacto exitosa.");
                     System.out.println("Informacion actualizada");
-                    misContactos.identifyEspecificContact(positionInList);
-                    scan.nextLine();
+                    System.out.println("====================================================");
+                    System.out.println(contactInfoToString(instanceOfContact.getName(),instanceOfContact.getNumbers(),instanceOfContact.getMail(),
+                    instanceOfContact.getDirection(),instanceOfContact.getNick()));
+                    System.out.println("====================================================");
+                    try {
+                        Thread.sleep(2*1000);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
                     break;
                 case 4:
                     System.out.println("Ingrese el nuevo correo del contacto: ");
@@ -326,8 +366,15 @@ public class Main {
                     misContactos.loadData(fileName);
                     System.out.println("Edicion de contacto exitosa.");
                     System.out.println("Informacion actualizada");
-                    misContactos.identifyEspecificContact(positionInList);
-                    scan.nextLine();
+                    System.out.println("====================================================");
+                    System.out.println(contactInfoToString(instanceOfContact.getName(),instanceOfContact.getNumbers(),instanceOfContact.getMail(),
+                    instanceOfContact.getDirection(),instanceOfContact.getNick()));
+                    System.out.println("====================================================");
+                    try {
+                        Thread.sleep(2*1000);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
                     break;
                 case 5:
                     System.out.println("Ingrese la nueva dirección del contacto: ");
@@ -337,8 +384,15 @@ public class Main {
                     misContactos.loadData(fileName);
                     System.out.println("Edicion de contacto exitosa.");
                     System.out.println("Informacion actualizada");
-                    misContactos.identifyEspecificContact(positionInList);
-                    scan.nextLine();
+                    System.out.println("====================================================");
+                    System.out.println(contactInfoToString(instanceOfContact.getName(),instanceOfContact.getNumbers(),instanceOfContact.getMail(),
+                    instanceOfContact.getDirection(),instanceOfContact.getNick()));
+                    System.out.println("====================================================");
+                    try {
+                        Thread.sleep(2*1000);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
                     break;
                 case 6:
                     System.out.println("Ingrese el nuevo sobrenombre del contacto: ");
@@ -348,22 +402,30 @@ public class Main {
                     misContactos.loadData(fileName);
                     System.out.println("Edicion de contacto exitosa.");
                     System.out.println("Informacion actualizada");
-                    misContactos.identifyEspecificContact(positionInList);
-                    scan.nextLine();
+                    System.out.println("====================================================");
+                    System.out.println(contactInfoToString(instanceOfContact.getName(),instanceOfContact.getNumbers(),instanceOfContact.getMail(),
+                    instanceOfContact.getDirection(),instanceOfContact.getNick()));
+                    System.out.println("====================================================");
+                    try {
+                        Thread.sleep(2*1000);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
                     break;
                 default:
                     System.out.println("Opcion Invalida");
                     break;
             }
+            scan.close();
             System.out.print("\033[H\033[2J");
             System.out.flush();
             mainMenu();
         }else{
+            scan.close();
             System.out.print("\033[H\033[2J");
             System.out.flush();
             editPhonebook();
         }
-        scan.close();
     }
 
     public static void deleteContactInPhonebook(){
@@ -371,7 +433,9 @@ public class Main {
         System.out.println("Ingrese la posicion del contacto a eliminar: ");
         int positionInList = scan.nextInt();
         scan.nextLine();
-        misContactos.identifyEspecificContact(positionInList);
+        Contact instanceOfContact = misContactos.identifyEspecificContact(positionInList);
+        System.out.println(contactInfoToString(instanceOfContact.getName(),instanceOfContact.getNumbers(),instanceOfContact.getMail(),
+        instanceOfContact.getDirection(),instanceOfContact.getNick()));
         System.out.println("¿Seguro que desea eliminar este contacto? S/N");
         String confirmation = scan.nextLine();
         if(confirmation.equalsIgnoreCase("S")==true){
@@ -391,41 +455,6 @@ public class Main {
         scan.close();
     }
 
-    public static void verifyStructureOfFile(String vFileName){
-        try {
-            Scanner scan = new Scanner(new File("pryto1/archives/"+fileName+".txt"));
-            while(scan.hasNextLine()){
-                String line = scan.nextLine();
-                int counter=0;
-                while (line.contains(";")) {
-                    line = line.substring(line.indexOf(";") + ";".length(), line.length());
-                    counter++;
-                }
-
-                if(counter != 4){
-                        try {
-                            System.out.println("El archivo no cumple con la estructura para este software");
-                            Thread.sleep(2*1000);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        defineFileName("default");
-                        System.out.print("\033[H\033[2J");
-                        System.out.flush();
-                        mainMenu();
-                    }  
-            }
-        } catch (IOException e){
-            try {
-                System.out.println("Archivo no encontrado");
-                Thread.sleep(2*1000);
-            } catch (Exception e2) {
-                e.printStackTrace();
-            }
-            e.printStackTrace();
-        }
-    }
-
     public static void importData(){
         Scanner scan = new Scanner(System.in);
         System.out.println("Ingrese el nombre que del archivo que desea importar");
@@ -433,8 +462,20 @@ public class Main {
         System.out.println("¿Seguro que desea cargar estos datos? S/N");
         String confirmation = scan.nextLine();
         if(confirmation.equalsIgnoreCase("S")==true){
-            verifyStructureOfFile(fN);
-            System.out.println("Archivo verificado");
+            Integer counter = misContactos.verifyStructureOfFile(fN);
+            if(counter != 4){
+                try {
+                    System.out.println("El archivo no cumple con la estructura para este software");
+                    Thread.sleep(2*1000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                defineFileName("default");
+                System.out.print("\033[H\033[2J");
+                System.out.flush();
+                mainMenu();
+            }  
+            System.out.println("Archivo verificado, importando datos");
             defineFileName(fN);
             misContactos.clean();
             misContactos.loadData(fN);
@@ -476,5 +517,15 @@ public class Main {
     public static String contactInfoToString(String name, String numbers, String mail,
         String direction, String nick){
         return "Nombre: "+name+"\nNumero(s): "+numbers+"\nE-Mail: "+mail+"\nDirección: "+direction+"\nSobrenombre: "+nick;
+    }
+
+    private static void pressAnyKeyToContinue(){ 
+           System.out.println("Presione cualquier tecla para continuar...");
+           try
+           {
+               System.in.read();
+           }  
+           catch(Exception e)
+           {}  
     }
 }

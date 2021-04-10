@@ -139,7 +139,7 @@ public class Phonebook{
         contactList.remove(positionInList);
     }
 
-    public void verifyContactNumbers(){
+    public void verifyContactNumbers() throws OriginalException{
         if(contactList.isEmpty()==false){
             for(Contact instanceOfContact : contactList){
                 String numbersChain = instanceOfContact.getNumbers();
@@ -156,21 +156,17 @@ public class Phonebook{
                         if(innerInstanceOfContact.getNumbers().indexOf(actualNumber) != -1){
                             counter++;
                             if(counter>1){
-                                System.out.println("Error: Número repetido hallado, Imposible acceder a la informacion de contacto...");
-                                System.exit(0);
+                                throw new  OriginalException("Error: Número repetido hallado, Imposible acceder a la informacion de contacto...");
                             }
                         }
                     }
                     aux = index+1;
                 } while (index != numbersChain.length());
             }
-            System.out.println("Agenda verificada, no se detectaron problemas.");
-        }else{
-            System.out.println("La agenda esta vacia. Nada que verificar.");
         }
     }
 
-    public void verifyEditContactNumbers(String fileName){
+    public void verifyEditContactNumbers(String fileName) throws OriginalException{
         if(contactList.isEmpty()==false){
             for(Contact instanceOfContact : contactList){
                 String numbersChain = instanceOfContact.getNumbers();
@@ -187,19 +183,30 @@ public class Phonebook{
                         if(innerInstanceOfContact.getNumbers().indexOf(actualNumber) != -1){
                             counter++;
                             if(counter>1){
-                                System.out.println("Error: No es posible almacenar números repetidos en la agenda");
-                                contactList.clear();
-                                loadData(fileName);
+                                throw new OriginalException("Error: No es posible almacenar números repetidos en la agenda");
                             }
                         }
                     }
                     aux = index+1;
                 } while (index != numbersChain.length());
             }
-            System.out.println("Número verificado, no se detectaron problemas.");
-        }else{
-            System.out.println("La agenda esta vacia. Nada que verificar.");
         }
+    }
+
+    public Integer verifyStructureOfFile(String vFileName){
+        int counter=0;
+        try {
+            Scanner scan = new Scanner(new File("pryto1/archives/"+vFileName+".txt"));
+            String line = scan.nextLine();
+            counter=0;
+            while (line.contains(";")) {
+                line = line.substring(line.indexOf(";") + ";".length(), line.length());
+                counter++;
+            }
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        return counter;
     }
 
     public void loadData(String fileName){
@@ -227,14 +234,11 @@ public class Phonebook{
             }
             scan.close();
         } catch (IOException ex) {
-            System.out.println("Error: Archivo no econtrado, Creando lista de contactos por defecto...");
             archive = new File("pryto1/archives/default.txt");
                 try {
                     archive.createNewFile();
-                    System.out.println("Creada lista de contactos por defecto");
                     loadData("default");
                 } catch (IOException ex2) {
-                    System.out.println("Error: Lista de contactos por defecto no puede ser creada");
                     ex2.printStackTrace();
             }
         }
