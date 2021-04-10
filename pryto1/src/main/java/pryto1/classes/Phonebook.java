@@ -1,10 +1,10 @@
 package pryto1.classes;
 
-import java.util.ArrayList;
+import java.io.File;
 import java.util.List;
 import java.util.Scanner;
-import java.io.File;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.io.IOException;
 
 public class Phonebook{
@@ -21,21 +21,25 @@ public class Phonebook{
         contactList.add(contact);
     }
 
-    public void searchContactByName(String name){
+    public Contact searchContactByName(String name) throws OriginalException{
         int searchedCounter=0;
+        Contact foundedContact = new Contact();
         for(Contact instanceOfContact : contactList){
             if(instanceOfContact.getName().compareTo(name) == 0 ){
-                instanceOfContact.showData();
+                foundedContact = instanceOfContact;
+                break;
             }
             searchedCounter++;
         }
         if(searchedCounter == contactList.size()){
-            System.out.println("No se halló ningun contacto bajo este nombre");
+            throw new OriginalException("No se halló ningun contacto bajo este nombre");
         }
+        return foundedContact;
     }
 
-    public void searchContactByNumber(String number){
+    public Contact searchContactByNumber(String number) throws OriginalException{
         int searchedCounter=0;
+        Contact foundedContact = new Contact();
         for(Contact instanceOfContact : contactList){
             String numbersChain = instanceOfContact.getNumbers();
             int aux=0;
@@ -47,7 +51,8 @@ public class Phonebook{
                 }
                 String actualNumber = numbersChain.substring(aux, index);
                 if(actualNumber.compareTo(number) == 0){
-                    instanceOfContact.showData();
+                    foundedContact = instanceOfContact;
+                    break;
                 }else{
                     aux = index+1;
                 }
@@ -56,62 +61,72 @@ public class Phonebook{
             searchedCounter++;
         }
         if(searchedCounter == contactList.size()){
-            System.out.println("No se halló ningun contacto bajo este número");
+            throw new OriginalException("No se halló ningun contacto bajo este número");
         }
+        return foundedContact;
     }
 
-    public void searchContactByMail(String mail){
+    public Contact searchContactByMail(String mail) throws OriginalException{
         int searchedCounter=0;
+        Contact foundedContact = new Contact();
         for(Contact instanceOfContact : contactList){
             if(instanceOfContact.getMail().compareTo(mail) == 0 ){
-                instanceOfContact.showData();
+                foundedContact = instanceOfContact;
+                break;
             }
             searchedCounter++;
         }
         if(searchedCounter == contactList.size()){
-            System.out.println("No se halló ningun contacto bajo este nombre de correo");
+            throw new OriginalException("No se halló ningun contacto bajo este correo electronico");
         }
+        return foundedContact;
     }
 
-    public void searchContactByDirection(String direction){
+    public Contact searchContactByDirection(String direction) throws OriginalException{
         int searchedCounter=0;
+        Contact foundedContact = new Contact();
         for(Contact instanceOfContact : contactList){
             if(instanceOfContact.getDirection().compareTo(direction) == 0 ){
-                instanceOfContact.showData();
+                foundedContact = instanceOfContact;
+                break;
             }
             searchedCounter++;
         }
         if(searchedCounter == contactList.size()){
-            System.out.println("No se halló ningun contacto bajo esta dirección");
+            throw new OriginalException("No se halló ningun contacto bajo esta dirección");
         }        
+        return foundedContact;
     }
 
-    public void searchContactByNick(String nick){
+    public Contact searchContactByNick(String nick) throws OriginalException{
         int searchedCounter=0;
+        Contact foundedContact = new Contact();
         for(Contact instanceOfContact : contactList){
             if(instanceOfContact.getNick().compareTo(nick) == 0 ){
-                instanceOfContact.showData();
+                foundedContact = instanceOfContact;
+                break;
             }
             searchedCounter++;
         }
         if(searchedCounter == contactList.size()){
-            System.out.println("No se halló ningun contacto bajo este sobrenombre");
+            throw new OriginalException("No se halló ningun contacto bajo este sobrenombre");
         }
+        return foundedContact;
     }
 
-    public void showContacts(){
-        int i=1;
+    public Contact[] returnInfo(){
+        Contact[] contactArray = new Contact[contactList.size()]; 
+        int i=0;
         for(Contact instanceOfContact : contactList){
-            System.out.println("==============================");
-            System.out.println("Contacto #"+i);
-            instanceOfContact.showData();
+            contactArray[i] = instanceOfContact;
             i++;
         }
+        return contactArray;
     }
 
-    public void identifyEspecificContact(int positionInList){
+    public Contact identifyEspecificContact(int positionInList){
         positionInList--;
-       contactList.get(positionInList).showData();
+       return contactList.get(positionInList);
     }
 
     public void editEspecificContactInfo(int option, int positionInList, String newInfo){
@@ -155,7 +170,7 @@ public class Phonebook{
         }
     }
 
-    public void verifyEditContactNumbers(){
+    public void verifyEditContactNumbers(String fileName){
         if(contactList.isEmpty()==false){
             for(Contact instanceOfContact : contactList){
                 String numbersChain = instanceOfContact.getNumbers();
@@ -174,7 +189,7 @@ public class Phonebook{
                             if(counter>1){
                                 System.out.println("Error: No es posible almacenar números repetidos en la agenda");
                                 contactList.clear();
-                                loadData("default");
+                                loadData(fileName);
                             }
                         }
                     }

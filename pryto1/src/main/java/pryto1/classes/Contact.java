@@ -9,6 +9,8 @@ public class Contact{
     private String direction;
     private String nick;
 
+    public Contact(){}
+
     public Contact(String name, String numbers, String mail, String direction, String nick) {
         this.name = name;
         this.numbers = numbers;
@@ -55,16 +57,6 @@ public class Contact{
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void showData(){
-        System.out.println("==============================");
-        System.out.println("Nombre: "+name);
-        System.out.println("Numeros: "+numbers);
-        System.out.println("E-Mail: "+mail);
-        System.out.println("Dirección: "+direction);
-        System.out.println("Apodo: "+nick);
-        System.out.println("==============================");        
     }
 
     public void editData(int option, String newValue){

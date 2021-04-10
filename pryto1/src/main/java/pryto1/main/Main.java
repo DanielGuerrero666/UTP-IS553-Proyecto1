@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 import pryto1.classes.Contact;
+import pryto1.classes.OriginalException;
 import pryto1.classes.Phonebook;
 
 public class Main {
@@ -39,8 +40,6 @@ public class Main {
         int option = scan.nextInt();
         switch(option){
             case 1:            
-                System.out.print("\033[H\033[2J");
-                System.out.flush();
                 addNewContact();
                 break;
             case 2:
@@ -138,6 +137,7 @@ public class Main {
 
     public static void searchInPhonebook(){
         Scanner scan = new Scanner(System.in);
+        Contact instanceOfContact;
         System.out.println("============== Filtros de Busqueda ==============");
         System.out.println("[1] - Por Nombre");
         System.out.println("[2] - Por Número");
@@ -152,8 +152,16 @@ public class Main {
             case 1: 
                 System.out.print("Ingrese el nombre a buscar: ");
                 String searchName = scan.nextLine();
-                misContactos.searchContactByName(searchName);
-                scan.nextLine();
+                try {
+                    instanceOfContact = misContactos.searchContactByName(searchName);
+                    System.out.println(contactInfoToString(instanceOfContact.getName(),instanceOfContact.getNumbers(),
+                        instanceOfContact.getMail(),instanceOfContact.getDirection(),instanceOfContact.getNick()));
+                    scan.nextLine();
+                } catch (OriginalException e) {
+                    System.out.println("Error: "+e.getMessage());
+                    scan.nextLine();
+                    e.printStackTrace();
+                }
                 System.out.print("\033[H\033[2J");
                 System.out.flush();
                 mainMenu();
@@ -161,32 +169,64 @@ public class Main {
             case 2: 
                 System.out.print("Ingrese el número a buscar: ");
                 String searchNumber = scan.nextLine();
-                misContactos.searchContactByNumber(searchNumber);
-                scan.nextLine();
+                try {
+                    instanceOfContact = misContactos.searchContactByNumber(searchNumber);
+                    System.out.println(contactInfoToString(instanceOfContact.getName(),instanceOfContact.getNumbers(),
+                        instanceOfContact.getMail(),instanceOfContact.getDirection(),instanceOfContact.getNick()));
+                    scan.nextLine();
+                } catch (OriginalException e) {
+                    System.out.println("Error: "+e.getMessage());
+                    scan.nextLine();
+                    e.printStackTrace();
+                }
                 System.out.print("\033[H\033[2J");
                 System.out.flush();
                 mainMenu();
                 break;
             case 3: System.out.print("Ingrese el correo a buscar: ");
                 String searchMail = scan.nextLine();
-                misContactos.searchContactByMail(searchMail);
-                scan.nextLine();
+                try {
+                    instanceOfContact = misContactos.searchContactByMail(searchMail);
+                    System.out.println(contactInfoToString(instanceOfContact.getName(),instanceOfContact.getNumbers(),
+                        instanceOfContact.getMail(),instanceOfContact.getDirection(),instanceOfContact.getNick()));
+                    scan.nextLine();
+                } catch (OriginalException e) {
+                    System.out.println("Error: "+e.getMessage());
+                    scan.nextLine();
+                    e.printStackTrace();
+                }
                 System.out.print("\033[H\033[2J");
                 System.out.flush();
                 mainMenu();
                 break;
             case 4: System.out.print("Ingrese la dirección a buscar: ");
                 String searchDirection = scan.nextLine();
-                misContactos.searchContactByDirection(searchDirection);
-                scan.nextLine();
+                try {
+                    instanceOfContact = misContactos.searchContactByDirection(searchDirection);
+                    System.out.println(contactInfoToString(instanceOfContact.getName(),instanceOfContact.getNumbers(),
+                        instanceOfContact.getMail(),instanceOfContact.getDirection(),instanceOfContact.getNick()));
+                    scan.nextLine();
+                } catch (OriginalException e) {
+                    System.out.println("Error: "+e.getMessage());
+                    scan.nextLine();
+                    e.printStackTrace();
+                }
                 System.out.print("\033[H\033[2J");
                 System.out.flush();
                 mainMenu();                
                 break;
             case 5: System.out.print("Ingrese el sobrenombre a buscar: ");
                 String searchNick = scan.nextLine();
-                misContactos.searchContactByNick(searchNick);
-                scan.nextLine();
+                try {
+                    instanceOfContact = misContactos.searchContactByNick(searchNick);
+                    System.out.println(contactInfoToString(instanceOfContact.getName(),instanceOfContact.getNumbers(),
+                        instanceOfContact.getMail(),instanceOfContact.getDirection(),instanceOfContact.getNick()));
+                    scan.nextLine();
+                } catch (OriginalException e) {
+                    System.out.println("Error: "+e.getMessage());
+                    scan.nextLine();
+                    e.printStackTrace();
+                }
                 System.out.print("\033[H\033[2J");
                 System.out.flush();
                 mainMenu();                
@@ -202,7 +242,15 @@ public class Main {
     public static void showPhonebook(){
         Scanner scan = new Scanner(System.in);
         System.out.println("============== Contactos en la Agenda ==============");
-        misContactos.showContacts();
+        Contact[] arrayOfInfo = misContactos.returnInfo();
+        int i=1;
+        for(Contact instanceOfContact : arrayOfInfo){
+            System.out.println("==============================================");
+            System.out.println("Contacto #"+i);
+            System.out.println(contactInfoToString(instanceOfContact.getName(),instanceOfContact.getNumbers(),instanceOfContact.getMail(),
+            instanceOfContact.getDirection(),instanceOfContact.getNick()));
+            i++;
+        }
         scan.nextLine();
         System.out.print("\033[H\033[2J");
         System.out.flush();
@@ -242,24 +290,18 @@ public class Main {
                     System.out.println("Informacion actualizada");
                     misContactos.identifyEspecificContact(positionInList);
                     scan.nextLine();
-                    System.out.print("\033[H\033[2J");
-                    System.out.flush();
-                    mainMenu();
                     break;
                 case 2:
                     System.out.print("Ingrese el nuevo numero de contacto :");
                     String newNumber = scan.nextLine();
                     misContactos.editEspecificContactInfo(2, positionInList, newNumber);
-                    misContactos.verifyEditContactNumbers();
+                    misContactos.verifyEditContactNumbers(fileName);
                     misContactos.saveData(fileName);
                     misContactos.loadData(fileName);
                     System.out.println("Edicion de contacto exitosa.");
                     System.out.println("Informacion actualizada");
                     misContactos.identifyEspecificContact(positionInList);
                     scan.nextLine();
-                    System.out.print("\033[H\033[2J");
-                    System.out.flush();
-                    mainMenu();
                     break;
                 case 3:
                     System.out.print("Ingrese el numero que desea editar: ");
@@ -268,16 +310,13 @@ public class Main {
                     String newToChangeNumber = scan.nextLine();
                     String codednumber = oldToChangeNumber+"|"+newToChangeNumber;
                     misContactos.editEspecificContactInfo(3, positionInList, codednumber);
-                    misContactos.verifyEditContactNumbers();
+                    misContactos.verifyEditContactNumbers(fileName);
                     misContactos.saveData(fileName);
                     misContactos.loadData(fileName);
                     System.out.println("Edicion de contacto exitosa.");
                     System.out.println("Informacion actualizada");
                     misContactos.identifyEspecificContact(positionInList);
                     scan.nextLine();
-                    System.out.print("\033[H\033[2J");
-                    System.out.flush();
-                    mainMenu();
                     break;
                 case 4:
                     System.out.println("Ingrese el nuevo correo del contacto: ");
@@ -289,9 +328,6 @@ public class Main {
                     System.out.println("Informacion actualizada");
                     misContactos.identifyEspecificContact(positionInList);
                     scan.nextLine();
-                    System.out.print("\033[H\033[2J");
-                    System.out.flush();
-                    mainMenu();
                     break;
                 case 5:
                     System.out.println("Ingrese la nueva dirección del contacto: ");
@@ -303,9 +339,6 @@ public class Main {
                     System.out.println("Informacion actualizada");
                     misContactos.identifyEspecificContact(positionInList);
                     scan.nextLine();
-                    System.out.print("\033[H\033[2J");
-                    System.out.flush();
-                    mainMenu();
                     break;
                 case 6:
                     System.out.println("Ingrese el nuevo sobrenombre del contacto: ");
@@ -317,16 +350,14 @@ public class Main {
                     System.out.println("Informacion actualizada");
                     misContactos.identifyEspecificContact(positionInList);
                     scan.nextLine();
-                    System.out.print("\033[H\033[2J");
-                    System.out.flush();
-                    mainMenu();
                     break;
                 default:
                     System.out.println("Opcion Invalida");
-                    System.out.print("\033[H\033[2J");
-                    System.out.flush();
-                    mainMenu();
+                    break;
             }
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
+            mainMenu();
         }else{
             System.out.print("\033[H\033[2J");
             System.out.flush();
@@ -440,5 +471,10 @@ public class Main {
             e.printStackTrace();
         }
         scan.close();
+    }
+
+    public static String contactInfoToString(String name, String numbers, String mail,
+        String direction, String nick){
+        return "Nombre: "+name+"\nNumero(s): "+numbers+"\nE-Mail: "+mail+"\nDirección: "+direction+"\nSobrenombre: "+nick;
     }
 }
