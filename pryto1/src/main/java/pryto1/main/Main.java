@@ -18,7 +18,7 @@ public class Main {
             System.out.println("Agenda verificada, no se detectaron problemas.");
         } catch (OriginalException e) {
             System.out.println("Error: "+e.getMessage());
-            e.printStackTrace();
+            System.exit(0);
         }
         mainMenu();
     }
@@ -270,7 +270,7 @@ public class Main {
         scan.nextLine();
         Contact instanceOfContact = misContactos.identifyEspecificContact(positionInList);
         System.out.println(contactInfoToString(instanceOfContact.getName(),instanceOfContact.getNumbers(),instanceOfContact.getMail(),
-        instanceOfContact.getDirection(),instanceOfContact.getNick()));
+            instanceOfContact.getDirection(),instanceOfContact.getNick()));
         System.out.println("¿Es este el contacto que desea editar? S/N");
         String confirmation = scan.nextLine();
         if(confirmation.equalsIgnoreCase("S")==true){
@@ -517,15 +517,5 @@ public class Main {
     public static String contactInfoToString(String name, String numbers, String mail,
         String direction, String nick){
         return "Nombre: "+name+"\nNumero(s): "+numbers+"\nE-Mail: "+mail+"\nDirección: "+direction+"\nSobrenombre: "+nick;
-    }
-
-    private static void pressAnyKeyToContinue(){ 
-           System.out.println("Presione cualquier tecla para continuar...");
-           try
-           {
-               System.in.read();
-           }  
-           catch(Exception e)
-           {}  
     }
 }
