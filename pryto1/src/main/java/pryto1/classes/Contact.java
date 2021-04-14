@@ -66,7 +66,7 @@ public class Contact{
                 setName(newValue);
                 break;
             case 2: 
-                String addingNumber = ","+newValue;
+                String addingNumber = getNumbers()==" "? newValue:","+newValue;
                 setNumbers(getNumbers()+addingNumber);
                 break;
             case 3:    
