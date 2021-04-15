@@ -1,2 +1,1 @@
-juan;3124347898,31243221334;dani.utp@gmail.com;;
-Carlos;3124567566;CRL@hotmail.com;Alabama;Carl
+Lucia;312908978,3214322367,345343444;Mrryme@hotmail.com;Chicago;Lucy

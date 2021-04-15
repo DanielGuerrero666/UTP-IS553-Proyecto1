@@ -124,8 +124,11 @@ public class Phonebook{
         return contactArray;
     }
 
-    public Contact identifyEspecificContact(int positionInList){
+    public Contact identifyEspecificContact(int positionInList) throws OriginalException{
         positionInList--;
+        if(positionInList>=contactList.size()){
+            throw new OriginalException("Posicion vacia, no es posibel acceder a la informacion");
+        }
        return contactList.get(positionInList);
     }
 

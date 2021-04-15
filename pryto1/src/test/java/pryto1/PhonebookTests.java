@@ -87,7 +87,11 @@ public class PhonebookTests {
         Phonebook testPhonebook = new Phonebook();
         Contact testContact = new Contact("TestName", "TestNumber", "TestMail", "TestDirection", "TestNick");
         testPhonebook.addContact(testContact);
-        assertEquals(testContact, testPhonebook.identifyEspecificContact(1));
+        try {
+            assertEquals(testContact, testPhonebook.identifyEspecificContact(1));
+        } catch (OriginalException e) {
+            e.printStackTrace();
+        }
     }
     
     @DisplayName("Testeando metodo de edicion, nombre de un contacto")

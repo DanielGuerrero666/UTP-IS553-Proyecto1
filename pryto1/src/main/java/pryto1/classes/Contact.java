@@ -60,7 +60,6 @@ public class Contact{
     }
 
     public void editData(int option, String newValue){
-        Scanner scan = new Scanner(System.in);
         switch(option){
             case 1: 
                 setName(newValue);
@@ -82,11 +81,7 @@ public class Contact{
             case 6: 
                 setNick(newValue);
                 break;
-            default: 
-                System.out.println("Error: Opción invalida");
-                break;
         }
-        scan.close();
     }
 
 }
