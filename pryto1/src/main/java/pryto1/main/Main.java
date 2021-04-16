@@ -1,3 +1,6 @@
+/* Clase Main, JavaSE-1.8, 16/04/2021, Juan Daniel Noriega Guerrero
+ *  Clase princiapl encargada de la interaccion programa-usuario
+ */
 package pryto1.main;
 
 import java.util.Scanner;
@@ -23,10 +26,15 @@ public class Main {
         }
     }
 
+    /*  Metodo "defineFileName" recibe un nombre para definir como archivo de trabajo.
+    */
     public static void defineFileName(String setFileName){
         fileName = setFileName;
     }
 
+    /*  Metodo "mainMenu" metodo que trabaja como menu principal, posee todas las posibles opciones
+    *   de trabajo con el programa para el usuario.
+    */
     public static void mainMenu(){
         Scanner scan = new Scanner(System.in);
         System.out.println("\n============== Menu Principal ==============");
@@ -96,6 +104,10 @@ public class Main {
         scan.close();
     }
 
+    /*  Metodo "addNewContact" se encarga de leer todos los datos ingreasdos por el usuario y crear
+    *   una instancia de Contact con esa informacion que sera guardada en la lista de contactos
+    *   tras esto, actualiza la agenda.
+    */
     public static void addNewContact(){
         Scanner scan = new Scanner(System.in);
         System.out.println("Ingrese los datos del nuevo contacto:");
@@ -138,6 +150,10 @@ public class Main {
         scan.close();
     }
 
+    /*  Metodo "searchInPhonebook" Se encarga de ofrecer al usuario una serie de busquedas por los 
+    *   distintos atributos de la clase Contact, tras esto lee informacion por consola que envia a
+    *   sus metodos realcionados en las clases internas del programa.
+    */
     public static void searchInPhonebook(){
         Scanner scan = new Scanner(System.in);
         Contact instanceOfContact2 = new Contact();
@@ -270,6 +286,9 @@ public class Main {
         scan.close();
     }
 
+    /*  Metodo "showPhonebook" este metodo se encarga de mostrar al usuario por consola,
+    *    su lista de contactos actual
+    */
     public static void showPhonebook(){
         Scanner scan = new Scanner(System.in);
         System.out.println("============== Contactos en la Agenda ==============");
@@ -289,6 +308,9 @@ public class Main {
         scan.close();
     }
 
+    /*  Metodo "editPhonebook" este metodo se encarga de enseñar al usuario una serie de opciones
+    *   con las cuales indicar el contacto y los atributos de este a editar.
+    */
     public static void editPhonebook(){
         Scanner scan = new Scanner(System.in);
         System.out.println("Ingrese la posicion del contacto a editar: ");
@@ -345,7 +367,7 @@ public class Main {
                     String newNumber = scan.nextLine();
                     misContactos.editEspecificContactInfo(2, positionInList, newNumber);
                 try {
-                    misContactos.verifyEditContactNumbers(fileName);
+                    misContactos.verifyEditContactNumbers();
                     System.out.println("Número verificado, no se detectaron problemas.");
                 } catch (OriginalException e) {
                     System.out.println("Error: "+e.getMessage());
@@ -369,7 +391,7 @@ public class Main {
                     String codednumber = oldToChangeNumber+"|"+newToChangeNumber;
                     misContactos.editEspecificContactInfo(3, positionInList, codednumber);
                 try {
-                    misContactos.verifyEditContactNumbers(fileName);
+                    misContactos.verifyEditContactNumbers();
                     System.out.println("Número verificado, no se detectaron problemas.");
                 } catch (OriginalException e) {
                     System.out.println("Error: "+e.getMessage());
@@ -442,6 +464,9 @@ public class Main {
         scan.close();
     }
 
+    /*  Metodo "deleteContactInPhonebook" se encarga de indicar y enseñar al usuario el contacto elegido
+    *   antes de solicitar una confirmacion para la invocacion de los metodos de borrado de contactos.
+    */
     public static void deleteContactInPhonebook(){
         Scanner scan = new Scanner(System.in);
         System.out.println("Ingrese la posicion del contacto a eliminar: ");
@@ -476,6 +501,9 @@ public class Main {
         scan.close();
     }
 
+    /*  Metodo "importData" se encarga de importar de un archivo, cuyo nombre es pedido
+    *   por consola, para cargar dicho archivo como archivo de trabajo durante la ejecucion del programa
+    */
     public static void importData(){
         Scanner scan = new Scanner(System.in);
         System.out.println("Ingrese el nombre que del archivo que desea importar");
@@ -517,6 +545,10 @@ public class Main {
         scan.close();
     }
 
+    /*  Metodo "exportData" se ecnarga de crear un archivo para el usuario en donde se exportara
+    *   la informacion de la listad e contactos actual, dicha exportacion se hallara en la carpeta
+    *   archives.
+    */
     public static void exportData(){
         Scanner scan = new Scanner(System.in);
         System.out.println("Ingrese el nombre que desea para exportar el archivo");
@@ -535,6 +567,9 @@ public class Main {
         scan.close();
     }
 
+    /*  Metodo "contactInfoToString" que facilita la impresion de informacion ordenada en los demas 
+    *   metodos de la clase Main.
+    */
     public static String contactInfoToString(String name, String numbers, String mail,
         String direction, String nick){
         return "Nombre: "+name+"\nNumero(s): "+numbers+"\nE-Mail: "+mail+"\nDirección: "+direction+"\nSobrenombre: "+nick;

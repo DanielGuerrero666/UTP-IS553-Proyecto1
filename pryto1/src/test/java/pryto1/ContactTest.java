@@ -1,3 +1,6 @@
+/* Clase ContactTest, JavaSE-1.8, 16/04/2021, Juan Daniel Noriega Guerrero
+ *  Clase de testeo de los metodos relevantes de la clase Contact
+ */
 package pryto1;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -1,6 +1,9 @@
+/* Clase Contact, JavaSE-1.8, 16/04/2021, Juan Daniel Noriega Guerrero
+ *
+ * 
+ */
 package pryto1.classes;
 
-import java.util.Scanner;
 
 public class Contact{
     private String name;
@@ -58,6 +61,10 @@ public class Contact{
     public void setName(String name) {
         this.name = name;
     }
+
+    /* Metodo que recibe una opcion y un valor y determina el cambio de informacion
+    *  a realizar en un contacto.
+    */
 
     public void editData(int option, String newValue){
         switch(option){
