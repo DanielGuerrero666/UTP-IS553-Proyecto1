@@ -17,12 +17,12 @@ public class ContactTest {
     @ParameterizedTest()
     @CsvSource(
         {
-            "Daniel, 3204675890, Daniel@utp.edu.co, Quimbaya, Dani"
+            "Daniel, 3204675890, Parque, Daniel@utp.edu.co, Quimbaya, Dani"
         })
-    void testingSettersAndGetters(String expectedName, String expectedNumber, String expectedMail,
+    void testingSettersAndGetters(String expectedName, String expectedNumber, String expectedMeetPlace, String expectedMail,
         String expectedDirection, String expectedNick){
 
-        Contact testContact = new Contact(expectedName, expectedNumber, expectedMail,
+        Contact testContact = new Contact(expectedName, expectedNumber, expectedMeetPlace, expectedMail,
             expectedDirection, expectedNick);
 
             assertEquals(expectedName, testContact.getName());

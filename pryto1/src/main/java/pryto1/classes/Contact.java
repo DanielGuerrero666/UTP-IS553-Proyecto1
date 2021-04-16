@@ -8,15 +8,17 @@ package pryto1.classes;
 public class Contact{
     private String name;
     private String numbers;
+    private String meetPlace;
     private String mail;
     private String direction;
     private String nick;
 
     public Contact(){}
 
-    public Contact(String name, String numbers, String mail, String direction, String nick) {
+    public Contact(String name, String numbers, String meetPlace, String mail, String direction, String nick) {
         this.name = name;
         this.numbers = numbers;
+        this.meetPlace = meetPlace;
         this.mail = mail;
         this.direction = direction;
         this.nick = nick;
@@ -62,30 +64,50 @@ public class Contact{
         this.name = name;
     }
 
+    public String getMeetPlace() {
+        return meetPlace;
+    }
+
+    public void setMeetPlace(String meetPlace) {
+        this.meetPlace = meetPlace;
+    }
+
+
     /* Metodo que recibe una opcion y un valor y determina el cambio de informacion
     *  a realizar en un contacto.
     */
 
     public void editData(int option, String newValue){
+        String confirmation;
         switch(option){
             case 1: 
-                setName(newValue);
+                confirmation = (newValue.isBlank())? getName():newValue;
+                setName(confirmation);
                 break;
             case 2: 
-                String addingNumber = getNumbers()==" "? newValue:","+newValue;
-                setNumbers(getNumbers()+addingNumber);
+                setNumbers(getNumbers()+","+newValue);
                 break;
             case 3:    
-                setNumbers(getNumbers().replaceAll(newValue.substring(0, newValue.indexOf("|")),
+                if(getNumbers().indexOf(",")==-1){
+                    confirmation = newValue.isBlank()? getNumbers():newValue;
+                    setNumbers(getNumbers().replaceAll(confirmation.substring(0, confirmation.indexOf("|")),
+                    confirmation.substring(confirmation.indexOf("|")+1, confirmation.length())));
+                }else{
+                    setNumbers(getNumbers().replaceAll(newValue.substring(0, newValue.indexOf("|")),
                     newValue.substring(newValue.indexOf("|")+1, newValue.length())));
+                }
                 break;
             case 4:
+                confirmation = (newValue.isBlank())? getMeetPlace():newValue;
+                setMeetPlace(confirmation);
+                break;
+            case 5:
                 setMail(newValue);
                 break;
-            case 5: 
+            case 6: 
                 setDirection(newValue);
                 break;
-            case 6: 
+            case 7: 
                 setNick(newValue);
                 break;
         }

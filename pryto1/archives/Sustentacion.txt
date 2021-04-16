@@ -2,3 +2,4 @@ Daniel;3145877890;Parque;daniel.noriega@utp.edu.co;Pereira;Dani
 Maria;32332324;Playa;;;
 Juan;1212;Recreo;;;
 Cesar;343443;Salon;;;
+Maria;343443,3432212;Usa;;;

@@ -18,6 +18,7 @@ public class Phonebook{
     private static String contactInfoFormat;
     private static String contactName;
     private static String contactNumbers;
+    private static String contactMeetPlace;
     private static String contactMail;
     private static String contactDirection;
     private static String contactNick;
@@ -90,6 +91,31 @@ public class Phonebook{
             throw new OriginalException("No se halló ningun contacto bajo este número");
         }
         return foundedContact;
+    }
+
+    public Contact[] searchContactByMeetPlace(String meetPlace) throws OriginalException{
+        int searchedCounter=0;
+        List<Contact> tempList = new ArrayList<>();
+        Contact[] contactArray;
+        for(Contact instanceOfContact : contactList){
+            if(instanceOfContact.getMeetPlace().compareTo(meetPlace) == 0 ){
+                tempList.add(instanceOfContact);
+            }else{
+                searchedCounter++;   
+            }
+        }
+        if(searchedCounter == contactList.size()){
+            throw new OriginalException("No se halló ningun contacto bajo este lugar");
+        }else{
+            contactArray = new Contact[tempList.size()]; 
+            int j=0;
+            for(Contact instanceOfContact : tempList){
+                contactArray[j] = instanceOfContact;
+                j++;
+            }
+        }
+        tempList.clear();
+        return contactArray;
     }
 
     /* Metodo "searchContactByMail", recibe un String mail con el correo del contacto a buscar
@@ -319,6 +345,9 @@ public class Phonebook{
                 contactNumbers = line.substring(aux, index);
                 aux = index+1;
                 index = line.indexOf(";", aux);
+                contactMeetPlace = line.substring(aux, index);
+                aux = index+1;
+                index = line.indexOf(";", aux);
                 contactMail = line.substring(aux, index);
                 aux = index+1;
                 index = line.indexOf(";", aux);
@@ -326,7 +355,7 @@ public class Phonebook{
                 aux = index+1;
                 index = line.length();
                 contactNick = line.substring(aux, index);
-                Contact instanceOfContact = new Contact(contactName, contactNumbers,
+                Contact instanceOfContact = new Contact(contactName, contactNumbers, contactMeetPlace,
                      contactMail, contactDirection, contactNick);
                 addContact(instanceOfContact);
             }
@@ -351,8 +380,8 @@ public class Phonebook{
             FileWriter writer = new FileWriter("pryto1/archives/"+fileName+".txt");
             for(Contact instanceOfContact : contactList){
                 contactInfoFormat = instanceOfContact.getName()+";"+instanceOfContact.getNumbers()+";"+
-                    instanceOfContact.getMail()+";"+instanceOfContact.getDirection()+";"+
-                        instanceOfContact.getNick();                   
+                    instanceOfContact.getMeetPlace()+";"+instanceOfContact.getMail()+";"+
+                        instanceOfContact.getDirection()+";"+instanceOfContact.getNick();                   
                 
                 writer.write(contactInfoFormat+"\n");
             }

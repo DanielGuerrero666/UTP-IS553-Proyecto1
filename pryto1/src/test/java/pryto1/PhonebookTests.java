@@ -66,7 +66,7 @@ public class PhonebookTests {
     @Test
     void testingReturnInfo(){
         Phonebook testPhonebook = new Phonebook();
-        Contact testContact = new Contact("TestName", "TestNumber", "TestMail", "TestDirection", "TestNick");
+        Contact testContact = new Contact("TestName", "TestNumber", "TestMeetPlace", "TestMail", "TestDirection", "TestNick");
         Contact testArray[] = {testContact};
         testPhonebook.addContact(testContact);
         assertEquals(testArray[0],testPhonebook.returnInfo()[0]);
@@ -76,7 +76,7 @@ public class PhonebookTests {
     @Test
     void testingIdentifyEspecificContact(){
         Phonebook testPhonebook = new Phonebook();
-        Contact testContact = new Contact("TestName", "TestNumber", "TestMail", "TestDirection", "TestNick");
+        Contact testContact = new Contact("TestName", "TestNumber", "TestMeetPlace", "TestMail", "TestDirection", "TestNick");
         testPhonebook.addContact(testContact);
         try {
             assertEquals(testContact, testPhonebook.identifyEspecificContact(1));
@@ -89,7 +89,7 @@ public class PhonebookTests {
     @Test
     void testingEditEspecificContactInfo1(){
         Phonebook testPhonebook = new Phonebook();
-        Contact testContact = new Contact("TestName", "TestNumber", "TestMail", "TestDirection", "TestNick");
+        Contact testContact = new Contact("TestName", "TestNumber", "TestMeetPlace", "TestMail", "TestDirection", "TestNick");
         testPhonebook.addContact(testContact);
         testPhonebook.editEspecificContactInfo(1, 1, "NewTestName");
         assertEquals("NewTestName", testPhonebook.returnInfo()[0].getName());
@@ -99,7 +99,7 @@ public class PhonebookTests {
     @Test
     void testingEditEspecificContactInfo2(){
         Phonebook testPhonebook = new Phonebook();
-        Contact testContact = new Contact("TestName", "TestNumber", "TestMail", "TestDirection", "TestNick");
+        Contact testContact = new Contact("TestName", "TestNumber", "TestMeetPlace", "TestMail", "TestDirection", "TestNick");
         testPhonebook.addContact(testContact);
         testPhonebook.editEspecificContactInfo(2, 1, "NewTestNumber");
         assertEquals("TestNumber,NewTestNumber", testPhonebook.returnInfo()[0].getNumbers());
@@ -109,7 +109,7 @@ public class PhonebookTests {
     @Test
     void testingEditEspecificContactInfo3(){
         Phonebook testPhonebook = new Phonebook();
-        Contact testContact = new Contact("TestName", "TestNumber", "TestMail", "TestDirection", "TestNick");
+        Contact testContact = new Contact("TestName", "TestNumber", "TestMeetPlace", "TestMail", "TestDirection", "TestNick");
         testPhonebook.addContact(testContact);
         testPhonebook.editEspecificContactInfo(3, 1, "TestNumber|NewTestNumber");
         assertEquals("NewTestNumber", testPhonebook.returnInfo()[0].getNumbers());
@@ -119,7 +119,7 @@ public class PhonebookTests {
     @Test
     void testingEditEspecificContactInfo4(){
         Phonebook testPhonebook = new Phonebook();
-        Contact testContact = new Contact("TestName", "TestNumber", "TestMail", "TestDirection", "TestNick");
+        Contact testContact = new Contact("TestName", "TestNumber", "TestMeetPlace", "TestMail", "TestDirection", "TestNick");
         testPhonebook.addContact(testContact);
         testPhonebook.editEspecificContactInfo(4, 1, "NewTestMail");
         assertEquals("NewTestMail", testPhonebook.returnInfo()[0].getMail());
@@ -129,7 +129,7 @@ public class PhonebookTests {
     @Test
     void testingEditEspecificContactInfo5(){
         Phonebook testPhonebook = new Phonebook();
-        Contact testContact = new Contact("TestName", "TestNumber", "TestMail", "TestDirection", "TestNick");
+        Contact testContact = new Contact("TestName", "TestNumber", "TestMeetPlace", "TestMail", "TestDirection", "TestNick");
         testPhonebook.addContact(testContact);
         testPhonebook.editEspecificContactInfo(5, 1, "NewTestDirection");
         assertEquals("NewTestDirection", testPhonebook.returnInfo()[0].getDirection());
@@ -139,7 +139,7 @@ public class PhonebookTests {
     @Test
     void testingEditEspecificContactInfo6(){
         Phonebook testPhonebook = new Phonebook();
-        Contact testContact = new Contact("TestName", "TestNumber", "TestMail", "TestDirection", "TestNick");
+        Contact testContact = new Contact("TestName", "TestNumber", "TestMeetPlace", "TestMail", "TestDirection", "TestNick");
         testPhonebook.addContact(testContact);
         testPhonebook.editEspecificContactInfo(6, 1, "NewTestNick");
         assertEquals("NewTestNick", testPhonebook.returnInfo()[0].getNick());
