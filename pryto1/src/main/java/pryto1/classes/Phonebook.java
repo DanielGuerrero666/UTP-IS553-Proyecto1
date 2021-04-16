@@ -21,20 +21,29 @@ public class Phonebook{
         contactList.add(contact);
     }
 
-    public Contact searchContactByName(String name) throws OriginalException{
+    public Contact[] searchContactByName(String name) throws OriginalException{
         int searchedCounter=0;
-        Contact foundedContact = new Contact();
+        List<Contact> tempList = new ArrayList<>();
+        Contact[] contactArray;
         for(Contact instanceOfContact : contactList){
             if(instanceOfContact.getName().compareTo(name) == 0 ){
-                foundedContact = instanceOfContact;
-                break;
+                tempList.add(instanceOfContact);
+            }else{
+                searchedCounter++;   
             }
-            searchedCounter++;
         }
         if(searchedCounter == contactList.size()){
             throw new OriginalException("No se halló ningun contacto bajo este nombre");
+        }else{
+            contactArray = new Contact[tempList.size()]; 
+            int j=0;
+            for(Contact instanceOfContact : tempList){
+                contactArray[j] = instanceOfContact;
+                j++;
+            }
         }
-        return foundedContact;
+        tempList.clear();
+        return contactArray;
     }
 
     public Contact searchContactByNumber(String number) throws OriginalException{
@@ -60,58 +69,85 @@ public class Phonebook{
             } while (index != numbersChain.length());
             searchedCounter++;
         }
-        if(searchedCounter == contactList.size()){
+        if(searchedCounter-1 == contactList.size()){
             throw new OriginalException("No se halló ningun contacto bajo este número");
         }
         return foundedContact;
     }
 
-    public Contact searchContactByMail(String mail) throws OriginalException{
+    public Contact[] searchContactByMail(String mail) throws OriginalException{
         int searchedCounter=0;
-        Contact foundedContact = new Contact();
+        List<Contact> tempList = new ArrayList<>();
+        Contact[] contactArray;
         for(Contact instanceOfContact : contactList){
             if(instanceOfContact.getMail().compareTo(mail) == 0 ){
-                foundedContact = instanceOfContact;
-                break;
+                tempList.add(instanceOfContact);
+            }else{
+                searchedCounter++;   
             }
-            searchedCounter++;
         }
         if(searchedCounter == contactList.size()){
             throw new OriginalException("No se halló ningun contacto bajo este correo electronico");
+        }else{
+            contactArray = new Contact[tempList.size()]; 
+            int j=0;
+            for(Contact instanceOfContact : tempList){
+                contactArray[j] = instanceOfContact;
+                j++;
+            }
         }
-        return foundedContact;
+        tempList.clear();
+        return contactArray;
     }
 
-    public Contact searchContactByDirection(String direction) throws OriginalException{
+    public Contact[] searchContactByDirection(String direction) throws OriginalException{
         int searchedCounter=0;
-        Contact foundedContact = new Contact();
+        List<Contact> tempList = new ArrayList<>();
+        Contact[] contactArray;
         for(Contact instanceOfContact : contactList){
             if(instanceOfContact.getDirection().compareTo(direction) == 0 ){
-                foundedContact = instanceOfContact;
-                break;
+                tempList.add(instanceOfContact);
+            }else{
+                searchedCounter++;   
             }
-            searchedCounter++;
         }
         if(searchedCounter == contactList.size()){
             throw new OriginalException("No se halló ningun contacto bajo esta dirección");
-        }        
-        return foundedContact;
+        }else{
+            contactArray = new Contact[tempList.size()]; 
+            int j=0;
+            for(Contact instanceOfContact : tempList){
+                contactArray[j] = instanceOfContact;
+                j++;
+            }
+        }  
+        tempList.clear();
+        return contactArray;
     }
 
-    public Contact searchContactByNick(String nick) throws OriginalException{
+    public Contact[] searchContactByNick(String nick) throws OriginalException{
         int searchedCounter=0;
-        Contact foundedContact = new Contact();
+        List<Contact> tempList = new ArrayList<>();
+        Contact[] contactArray;
         for(Contact instanceOfContact : contactList){
             if(instanceOfContact.getNick().compareTo(nick) == 0 ){
-                foundedContact = instanceOfContact;
-                break;
+                tempList.add(instanceOfContact);
+            }else{
+                searchedCounter++;   
             }
-            searchedCounter++;
         }
         if(searchedCounter == contactList.size()){
             throw new OriginalException("No se halló ningun contacto bajo este sobrenombre");
+        }else{
+            contactArray = new Contact[tempList.size()]; 
+            int j=0;
+            for(Contact instanceOfContact : tempList){
+                contactArray[j] = instanceOfContact;
+                j++;
+            }
         }
-        return foundedContact;
+        tempList.clear();
+        return contactArray;
     }
 
     public Contact[] returnInfo(){

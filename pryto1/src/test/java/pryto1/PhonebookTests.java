@@ -10,26 +10,14 @@ import pryto1.classes.OriginalException;
 import pryto1.classes.Phonebook;
 
 public class PhonebookTests {
+    Phonebook testPhonebook = new Phonebook();
 
     @DisplayName("Testeando metodo de busqeda por nombre")
     @Test
     void testingSearcByName(){
-        Phonebook testPhonebook = new Phonebook();
-        testPhonebook.loadData("testresourcearchive");
         try {
-            assertEquals("TestName", testPhonebook.searchContactByName("TestName"));
-        } catch (OriginalException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @DisplayName("Testeando metodo de busqeda por numero")
-    @Test
-    void testingSearcByNumber(){
-        Phonebook testPhonebook = new Phonebook();
-        testPhonebook.loadData("testresourcearchive");
-        try {
-            assertEquals("TestNumber", testPhonebook.searchContactByNumber("TestNumber"));
+            testPhonebook.loadData("testresourcearchive");
+            assertEquals("TestName", testPhonebook.searchContactByName("TestName")[0].getName());
         } catch (OriginalException e) {
             e.printStackTrace();
         }
@@ -41,7 +29,7 @@ public class PhonebookTests {
         Phonebook testPhonebook = new Phonebook();
         testPhonebook.loadData("testresourcearchive");
         try {
-            assertEquals("TestMail", testPhonebook.searchContactByMail("TestMail"));
+            assertEquals("TestMail", testPhonebook.searchContactByMail("TestMail")[0].getMail());
         } catch (OriginalException e) {
             e.printStackTrace();
         }
@@ -53,7 +41,7 @@ public class PhonebookTests {
         Phonebook testPhonebook = new Phonebook();
         testPhonebook.loadData("testresourcearchive");
         try {
-            assertEquals("TestDirection", testPhonebook.searchContactByDirection("TestDirection"));
+            assertEquals("TestDirection", testPhonebook.searchContactByDirection("TestDirection")[0].getDirection());
         } catch (OriginalException e) {
             e.printStackTrace();
         }
@@ -65,7 +53,7 @@ public class PhonebookTests {
         Phonebook testPhonebook = new Phonebook();
         testPhonebook.loadData("testresourcearchive");
         try {
-            assertEquals("TestNick", testPhonebook.searchContactByNick("TestNick"));
+            assertEquals("TestNick", testPhonebook.searchContactByNick("TestNick")[0].getNick());
         } catch (OriginalException e) {
             e.printStackTrace();
         }
